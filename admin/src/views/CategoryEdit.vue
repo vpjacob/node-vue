@@ -32,13 +32,13 @@ export default {
     async save() {
       let res;
       if (this.id) {
-        res = await this.$http.put(`categories/${this.id}`, this.model);
+        res = await this.$http.put(`rest/categories/${this.id}`, this.model);
         this.$message({
           type: "success",
           message: "修改成功"
         });
       } else {
-        res = await this.$http.post("categories", this.model);
+        res = await this.$http.post("rest/categories", this.model);
         this.$message({
           type: "success",
           message: "保存成功"
@@ -47,18 +47,17 @@ export default {
       this.$router.push("/categories/list");
     },
     async fetch() {
-      const res = await this.$http.get(`categories/${this.id}`);
+      const res = await this.$http.get(`rest/categories/${this.id}`);
       this.model = res.data;
     },
     async fetchParent() {
-      const res = await this.$http.get('categories');
+      const res = await this.$http.get('rest/categories');
       this.parent = res.data;
     }
   },
   created() {
     this.fetchParent();
     this.id && this.fetch();
-    console.log('====data',this._data)
   }
 };
 </script>
