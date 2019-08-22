@@ -27,7 +27,7 @@
 export default {
   data() {
     return {
-      items: [{ name: "xxx", _id: 222 }]
+      items: []
     };
   },
   methods: {
