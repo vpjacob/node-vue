@@ -1,4 +1,5 @@
 # node-vue
+`npm run serve`
 
 - `@submit.native.prevent` 阻止表单回车提交
 

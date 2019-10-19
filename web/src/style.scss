@@ -1,0 +1,19 @@
+// reset
+* {
+    box-sizing: border-box;//为了不让padding 撑大
+    outline: none; // 不高亮
+  }
+  
+  html {
+    font-size: 13px;
+  }
+  body {
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.2em;
+    background: #f1f1f1;
+  }
+  a {
+    color: #999;
+  } 
+  
