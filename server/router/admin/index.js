@@ -69,6 +69,5 @@ module.exports = app => {
         res.status(err.statusCode || 500).send({
             message: err.message
         })
-
     })
 }
