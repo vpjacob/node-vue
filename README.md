@@ -52,3 +52,11 @@ Multer 会添加一个 body 对象 以及 file 或 files 对象 到 express
 - `el-rate` 评分
 - `vue2-editor` 富文本编译器
 - `cors` 实现请求跨域 
+
+```
+db.getCollection('items').find({}).map(doc => {
+  doc.icon =   doc.icon.replace('localhost:3000','39.106.18.19')
+    db.items.save(doc)
+    return doc
+})
+```

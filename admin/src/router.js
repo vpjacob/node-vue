@@ -13,6 +13,7 @@ import HeroList from './views/HeroList.vue'
 
 import ArticleEdit from './views/ArticleEdit.vue'
 import ArticleList from './views/ArticleList.vue'
+import ArticleDetail from './views/ArticleDetail.vue'
 
 import AdEdit from './views/AdEdit.vue'
 import AdList from './views/AdList.vue'
@@ -47,7 +48,8 @@ const router = new Router({
         {path:'/heroes/create',component:HeroEdit},
         {path:'/heroes/edit/:id',component:HeroEdit,props:true},
         {path:'/heroes/list',component:HeroList},
-
+        
+        {path:'/articles/detail/:id',component:ArticleDetail,props:true},
         {path:'/articles/create',component:ArticleEdit},
         {path:'/articles/edit/:id',component:ArticleEdit,props:true},
         {path:'/articles/list',component:ArticleList},
