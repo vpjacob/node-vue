@@ -47,7 +47,7 @@ module.exports = app => {
     const upload = multer({ dest: __dirname + '/../../uploads' })
     app.post('/admin/api/upload', authMiddleware(), upload.single('file'), async (req, res) => {
         let file = req.file
-        file.url = `http://localhost:3000/uploads/${file.filename}`
+        file.url = `http://39.106.18.19/uploads/${file.filename}`
         res.send(file)
     })
 
