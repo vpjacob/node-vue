@@ -13,6 +13,9 @@ Vue.mixin({
   computed: {
     uploadUrl(){
       return this.$http.defaults.baseURL + '/upload'
+    },
+    uploadGril(){
+      return this.$http.defaults.baseURL + '/uploadGril'
     }
   },
   methods: {
