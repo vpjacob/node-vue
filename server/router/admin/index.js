@@ -48,12 +48,7 @@ module.exports = app => {
     app.post('/admin/api/upload', authMiddleware(), upload.single('file'), async (req, res) => {
         let file = req.file
         file.url = `http://39.106.18.19/uploads/${file.filename}`
-        res.send(file)
-    })
-    const uploadGril = multer({ dest: __dirname + '/../../uploadGril' })
-    app.post('/admin/api/uploadGril', authMiddleware(), uploadGril.single('file'), async (req, res) => {
-        let file = req.file
-        file.url = `http://39.106.18.19/uploadGril/${file.filename}`
+        // file.url = `http://localhost:3000/uploads/${file.filename}`
         res.send(file)
     })
     // 登录
