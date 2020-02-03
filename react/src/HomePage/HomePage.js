@@ -1,17 +1,9 @@
 import React, { Component } from "react";
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout,  } from 'antd';
 import ReactEcharts from 'echarts-for-react';
 import {postFetch} from '../utils/http'
 import 'antd/dist/antd.css';
-const { Content, Sider } = Layout;
-const { SubMenu } = Menu;
-
-
-const div1 = {
-  flex: 1,
-
-};
-
+const { Content,  } = Layout;
 
 export default class HomePage extends Component {
 
@@ -25,13 +17,11 @@ export default class HomePage extends Component {
   
 
   componentDidMount() {
-    var storage=window.localStorage
-
+    // var storage=window.localStorage
     // console.log('====',storage.getItem('token'))
     postFetch('/get_chart_data', {
     }).then(
       (data) => {
-        console.log('===data',data)
         // storage.setItem('token',data.token)
         this.setState({
           option:data.option

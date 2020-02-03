@@ -72,27 +72,34 @@ module.exports = app => {
     app.post('/chart/api/creat_chart_data', async (req, res) => {
         // Chart
         const modle = await Chart.create(req.body)
-        console.log('=xxxxx',req.body)
         res.send({
-            success:true,
+            success: true,
             modle
         })
     })
 
-    
+
     app.post('/chart/api/get_chart_list', async (req, res) => {
         // Chart
         const items = await Chart.find()
         res.send({
-            success:true,
-            list:items
+            success: true,
+            list: items
         })
     })
 
+    // 删除某一条错误的数据
+    app.post('/chart/api/delete_item', async (req, res) => {
+        const items = await Chart.findByIdAndDelete(req.body.id)
+        res.send({
+            success: items ? true : false,
+        })
+    })
+
+
     // 创建数据
     app.post('/chart/api/get_chart_data', async (req, res) => {
-        
-        
+        const items = await Chart.find().sort({ datetime: -1 })
         const option = {
             title: {
                 text: '病情变化',

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, InputNumber, Button ,DatePicker} from 'antd';
+import { Layout, InputNumber, Button ,message, DatePicker} from 'antd';
 import { postFetch } from '../utils/http'
 import 'antd/dist/antd.css';
 const { Content } = Layout;
@@ -22,14 +22,18 @@ export default class CreatPage extends Component {
     
   }
   onChange = (value,type) => {
+    
     this.setState({
       [type]:value
-    },()=>console.log('changed', [type],value,this.state));
+    });
     
   }
 
   submitPress = () => {
     const { suspected, definite,death,discharge,datetime} = this.state
+    if(datetime === ''){
+      return message.info('请选择时间');
+    }
     postFetch('/creat_chart_data', {
       suspected,//疑似
       definite,//确诊
@@ -38,7 +42,10 @@ export default class CreatPage extends Component {
       datetime,
     }).then(
       (data) => {
-
+        if(data.success){
+          return message.info('创建成功');
+        }
+        message.info('创建错误');
       }
     )
   }

@@ -1,12 +1,9 @@
 import axios from "axios";
-import { Component } from "react";
 import * as _ from 'lodash';
 
-// let base = "http://localhost:3000/chart/api";
-let base = "http://39.106.18.19/chart/api";
+// const base = "http://localhost:3000/chart/api";
+const base = "http://39.106.18.19/chart/api";
 const storage = window.localStorage
-
-// console.log('====',storage.getItem('token'))
 
 const buildPublicParams = (reqParams = {}) => {
   // reqParams.agent_id = global.agent_id;
