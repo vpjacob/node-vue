@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /dist
+/react/build
 uploads
 dump
 # local env files
