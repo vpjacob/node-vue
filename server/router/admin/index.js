@@ -58,7 +58,7 @@ module.exports = app => {
         const user = await AdminUser.findOne({ username }).select('+password')
         assert(user, 422, '用户不存在')
         const isValid = require('bcrypt').compareSync(password, user.password)
-        assert(isValid, 422, '密码错误')
+        assert(isValid, 423, '密码错误')
 
         const token = jwt.sign({ id: user._id }, app.get('secret'))
         res.send({ token })

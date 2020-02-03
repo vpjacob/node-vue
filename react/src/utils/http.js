@@ -1,8 +1,10 @@
 import axios from "axios";
 import { Component } from "react";
+import * as _ from 'lodash';
 
-let base = "http://localhost:3000/chart/api";
-const storage=window.localStorage
+// let base = "http://localhost:3000/chart/api";
+let base = "http://39.106.18.19/chart/api";
+const storage = window.localStorage
 
 // console.log('====',storage.getItem('token'))
 
@@ -34,34 +36,34 @@ const buildPublicParams = (reqParams = {}) => {
 };
 
 
- export const postFetch = (url, params = {}) => {
+export const postFetch = (url, params = {}) => {
   return axios({
-      url: base + url,
-      method: 'post',
-      responseType: 'json',
-      data: buildPublicParams(params),
-      timeout: 30000,
-      headers: {
-        'token':'Bearer ' + storage.getItem('token',''),
+    url: base + url,
+    method: 'post',
+    responseType: 'json',
+    data: buildPublicParams(params),
+    timeout: 30000,
+    headers: {
+      'token': 'Bearer ' + _.get(storage.getItem('token') ,'' ,''),
     },
-      // cancelToken : cancelToken,
-      maxRedirects: 10,
+    // cancelToken : cancelToken,
+    maxRedirects: 10,
   }).then(resp => {
     console.log('xxxxSuccess:', url, resp, params);
-      return resp.data;
+    return resp.data;
   }).then(json => {
-      // if (json.code == '1') {
-      //     console.log('xxxxSuccess:', url, json.data, params);
-      //     return json.data;
-      // } else {
-      //   console.log('xxxxFailed:', url, json, params);
-      //     return {};
-      // }
-      return json
+    // if (json.code == '1') {
+    //     console.log('xxxxSuccess:', url, json.data, params);
+    //     return json.data;
+    // } else {
+    //   console.log('xxxxFailed:', url, json, params);
+    //     return {};
+    // }
+    return json
   }).catch(ex => {
     console.log('xxxxSend HTTP request:', url, ex, params);
 
-      return {};
+    return {};
   });
 };
 
