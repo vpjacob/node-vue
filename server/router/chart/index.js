@@ -1,5 +1,7 @@
 module.exports = app => {
     const express = require('express')
+    const _ = require('lodash')
+    
     const jwt = require('jsonwebtoken')
     const AdminUser = require('../../modles/AdminUser')
     const Chart = require('../../modles/Chart')
@@ -59,7 +61,6 @@ module.exports = app => {
     // 登录
     app.post('/chart/api/login', async (req, res) => {
         const { password, username } = req.body
-        console.log('password', password, username)
         const user = await AdminUser.findOne({ username }).select('+password')
         assert(user, 422, '用户不存在')
         const isValid = require('bcrypt').compareSync(password, user.password)
@@ -81,7 +82,7 @@ module.exports = app => {
 
     app.post('/chart/api/get_chart_list', async (req, res) => {
         // Chart
-        const items = await Chart.find()
+        const items = await Chart.find().sort({ datetime: -1 })
         res.send({
             success: true,
             list: items
@@ -97,13 +98,29 @@ module.exports = app => {
     })
 
 
-    // 创建数据
+
+    /**
+     *    创建图标数据   
+      suspected: 0,//疑似
+      definite: 0,//确诊
+      death: 0,//死亡
+      discharge: 0,//出院
+      datetime: '',
+     */
     app.post('/chart/api/get_chart_data', async (req, res) => {
-        const items = await Chart.find().sort({ datetime: -1 })
-        const option = {
+        const items = await Chart.find().sort({ datetime: 1 })
+        let suspected= [], definite= [],death= [],discharge= [] ,datetime= [];
+        _.map(items,(item,)=>{
+            suspected = _.concat(suspected,item.suspected)
+            definite = _.concat(definite,item.definite)
+            death = _.concat(death,item.death)
+            discharge = _.concat(discharge,item.discharge)
+            datetime = _.concat(datetime,item.datetime)
+        });
+        const option1 = {
             title: {
                 text: '病情变化',
-                subtext: '自己记录'
+                subtext: '确诊和疑似'
             },
             tooltip: {
                 trigger: 'axis'
@@ -126,7 +143,7 @@ module.exports = app => {
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                data: datetime
             },
             yAxis: {
                 type: 'value',
@@ -138,7 +155,7 @@ module.exports = app => {
                 {
                     name: '疑似',
                     type: 'line',
-                    data: [11, 11, 15, 93, 12, 13, 10],
+                    data: suspected,
                     markPoint: {
                         data: [
                             { type: 'max', name: '最大值' },
@@ -154,7 +171,74 @@ module.exports = app => {
                 {
                     name: '确诊',
                     type: 'line',
-                    data: [1, -2, 2, 5, 3, 2, 0],
+                    data: definite,
+                    markPoint: {
+                        data: [
+                            { name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: '平均值' },
+                            [{
+                                symbol: 'none',
+                                x: '90%',
+                                yAxis: 'max'
+                            }, {
+                                symbol: 'circle',
+                                label: {
+                                    normal: {
+                                        position: 'start',
+                                        formatter: '最大值'
+                                    }
+                                },
+                                type: 'max',
+                                name: '最高点'
+                            }]
+                        ]
+                    }
+                }
+            ]
+        };
+        const option2 = {
+            title: {
+                text: '病情变化',
+                subtext: '出院和死亡'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['最高气温', '最低气温']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: { readOnly: false },
+                    magicType: { type: ['line', 'bar'] },
+                    // restore: {},
+                    // saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: datetime
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} 人'
+                }
+            },
+            series: [
+                {
+                    name: '死亡',
+                    type: 'line',
+                    data: death,
                     markPoint: {
                         data: [
                             { name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }
@@ -182,9 +266,9 @@ module.exports = app => {
                     }
                 },
                 {
-                    name: '确诊',
+                    name: '治愈',
                     type: 'line',
-                    data: [11, -12, 12, 195, 13, 2, 1],
+                    data: discharge,
                     markPoint: {
                         data: [
                             { name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }
@@ -211,13 +295,13 @@ module.exports = app => {
                         ]
                     }
                 },
-
             ]
         };
 
 
         res.send({
-            option
+            option1,option2,
+            success:true,
         })
     })
 
