@@ -46,7 +46,6 @@ export const postFetch = (url, params = {}) => {
     // cancelToken : cancelToken,
     maxRedirects: 10,
   }).then(resp => {
-    console.log('xxxxSuccess:', url, resp, params);
     return resp.data;
   }).then(json => {
     // if (json.code == '1') {
@@ -58,7 +57,6 @@ export const postFetch = (url, params = {}) => {
     // }
     return json
   }).catch(ex => {
-    console.log('xxxxSend HTTP request:', url, ex, params);
 
     return {};
   });

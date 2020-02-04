@@ -11,20 +11,21 @@ export default class HomePage extends Component {
     super(props)
   
     this.state = {
-      option:{}
+      option1:{},
+      option2:{},
     }
   }
   
 
   componentDidMount() {
     // var storage=window.localStorage
-    // console.log('====',storage.getItem('token'))
     postFetch('/get_chart_data', {
     }).then(
       (data) => {
         // storage.setItem('token',data.token)
         this.setState({
-          option:data.option
+          option1:data.option1,
+          option2:data.option2
         })
       }
     )
@@ -37,7 +38,12 @@ export default class HomePage extends Component {
           <Layout style={{ padding: '24px 0', background: '#fff' }}>
             <Content style={{ padding: '0 24px', minHeight: 280 }}>
               <ReactEcharts
-                option={this.state.option}
+                option={this.state.option1}
+                style={{ height: '500px', width: '90%' }}
+                className='react_for_echarts' />
+
+<ReactEcharts
+                option={this.state.option2}
                 style={{ height: '500px', width: '90%' }}
                 className='react_for_echarts' />
             </Content>
