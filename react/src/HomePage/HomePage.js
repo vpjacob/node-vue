@@ -3,6 +3,8 @@ import { Layout,  } from 'antd';
 import ReactEcharts from 'echarts-for-react';
 import {postFetch} from '../utils/http'
 import 'antd/dist/antd.css';
+import * as _ from 'lodash'
+
 const { Content,  } = Layout;
 
 export default class HomePage extends Component {
@@ -24,8 +26,8 @@ export default class HomePage extends Component {
       (data) => {
         // storage.setItem('token',data.token)
         this.setState({
-          option1:data.option1,
-          option2:data.option2
+          option1:_.get(data,'option1',{}),
+          option2:_.get(data,'option2',{}),
         })
       }
     )

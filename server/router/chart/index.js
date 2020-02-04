@@ -119,7 +119,7 @@ module.exports = app => {
         });
         const option1 = {
             title: {
-                text: '病情变化',
+                text: '病情变化增速',
                 subtext: '确诊和疑似'
             },
             tooltip: {
@@ -202,7 +202,7 @@ module.exports = app => {
         };
         const option2 = {
             title: {
-                text: '病情变化',
+                text: '病情变化增速',
                 subtext: '出院和死亡'
             },
             tooltip: {
