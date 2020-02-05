@@ -5,6 +5,8 @@ module.exports = app => {
     const jwt = require('jsonwebtoken')
     const AdminUser = require('../../modles/AdminUser')
     const Chart = require('../../modles/Chart')
+    const StockInfo = require('../../modles/StockInfo')
+
     const assert = require('http-assert')
 
     const router = express.Router({
@@ -96,8 +98,164 @@ module.exports = app => {
             success: items ? true : false,
         })
     })
+    
+    /**
+     *    创建图标数据   
+    rongzi: { type: String },
+    hugangtong: { type: String },
+      datetime: '',
+     */
+    app.post('/chart/api/get_stock_chart', async (req, res) => {
+        const items = await StockInfo.find().sort({ datetime: 1 })
+        let rongzi= [], hugangtong= [],datetime= [];
+        _.map(items,(item,)=>{
+            rongzi = _.concat(rongzi,item.rongzi)
+            hugangtong = _.concat(hugangtong,item.hugangtong)
+            datetime = _.concat(datetime,item.datetime)
+        });
+        const option1 = {
+            title: {
+                text: '融资融券余额',
+                subtext: '单位：亿元'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['最高气温', '最低气温']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: { readOnly: false },
+                    magicType: { type: ['line', 'bar'] },
+                    // restore: {},
+                    // saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: datetime
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} 人'
+                }
+            },
+            series: [
+                
+                {
+                    name: '余额',
+                    type: 'line',
+                    data: rongzi,
+                    markPoint: {
+                        data: [
+                            { name: '最低', value: -2, xAxis: 1, yAxis: -1.5 }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: '平均值' },
+                            [{
+                                symbol: 'none',
+                                x: '90%',
+                                yAxis: 'max'
+                            }, {
+                                symbol: 'circle',
+                                label: {
+                                    normal: {
+                                        position: 'start',
+                                        formatter: '最大值'
+                                    }
+                                },
+                                type: 'max',
+                                name: '最高点'
+                            }]
+                        ]
+                    }
+                }
+            ]
+        };
+        const option2 = {
+            title: {
+                text: '北上资金流入流出',
+                subtext: '单位：亿元'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['最高气温', '最低气温']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: { readOnly: false },
+                    magicType: { type: ['line', 'bar'] },
+                    // restore: {},
+                    // saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: datetime
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} 人'
+                }
+            },
+            series: [
+                
+                {
+                    name: '金额',
+                    type: 'line',
+                    data: hugangtong,
+                    markPoint: {
+                        data: [
+                            { name: '最低', value: -2, xAxis: 1, yAxis: -1.5 }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: '平均值' },
+                            [{
+                                symbol: 'none',
+                                x: '90%',
+                                yAxis: 'max'
+                            }, {
+                                symbol: 'circle',
+                                label: {
+                                    normal: {
+                                        position: 'start',
+                                        formatter: '最大值'
+                                    }
+                                },
+                                type: 'max',
+                                name: '最高点'
+                            }]
+                        ]
+                    }
+                },
+            ]
+        };
 
 
+        res.send({
+            option1,option2,
+            success:true,
+        })
+    })
 
     /**
      *    创建图标数据   

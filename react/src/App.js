@@ -7,8 +7,8 @@ import {
   // useRouteMatch,
   // useParams
 } from "react-router-dom";
-import CreatPage from "./CreatPage/CreatPage";
-import TopicsPage from "./TopicsPage/TopicsPage";
+import StockInfoPage from "./StockInfoPage/StockInfoPage";
+// import TopicsPage from "./TopicsPage/TopicsPage";
 import HomePage from "./HomePage/HomePage";
 import { Layout, Menu, } from 'antd';
 
@@ -30,18 +30,18 @@ export default function App() {
             style={{ lineHeight: '64px' }}
           >
             <Menu.Item key="1"><Link to="/">疫情图</Link></Menu.Item>
-            <Menu.Item key="2"><Link to="/creat">创建数据</Link></Menu.Item>
-            <Menu.Item key="3"><Link to="/topics">列表</Link></Menu.Item>
+            <Menu.Item key="2"><Link to="/stock_info">融资金额和北上资金</Link></Menu.Item>
+            {/* <Menu.Item key="3"><Link to="/topics">列表</Link></Menu.Item> */}
           </Menu>
         </Header>
 
         <Switch>
-          <Route path="/creat">
-            <CreatPage />
+          <Route path="/stock_info">
+            <StockInfoPage />
           </Route>
-          <Route path="/topics">
+          {/* <Route path="/topics">
             <TopicsPage />
-          </Route>
+          </Route> */}
           <Route path="/">
             <HomePage />
           </Route>

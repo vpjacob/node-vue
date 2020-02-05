@@ -12,6 +12,17 @@
             <el-menu-item index="/articles/create">新建文章</el-menu-item>
             <el-menu-item index="/articles/list">文章列表</el-menu-item>
           </el-menu-item-group>
+          <el-menu-item-group>
+            <template slot="title">融资和沪港通</template>
+            <el-menu-item index="/stock_info/create">融资和沪港通创建</el-menu-item>
+            <el-menu-item index="/stock_info/list">股票资讯列表</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
+            <template slot="title">疫情信息</template>
+            <el-menu-item index="/charts/create">疫情信息编辑</el-menu-item>
+            <el-menu-item index="/charts/list">疫情信息列表</el-menu-item>
+          </el-menu-item-group>
+
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">

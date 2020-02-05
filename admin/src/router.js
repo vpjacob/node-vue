@@ -21,6 +21,11 @@ import AdList from './views/AdList.vue'
 import AdminUserEdit from './views/AdminUserEdit.vue'
 import AdminUserList from './views/AdminUserList.vue'
 
+import StockInfoEdit from './views/StockInfoEdit.vue'
+import StockInfoList from './views/StockInfoList.vue'
+
+import ChartInfoEdit from './views/ChartInfoEdit.vue'
+import ChartInfoList from './views/ChartInfoList.vue'
 
 Vue.use(Router)
 const originalPush = Router.prototype.push
@@ -62,6 +67,15 @@ const router = new Router({
         {path:'/admin_users/edit/:id',component:AdminUserEdit,props:true},
         {path:'/admin_users/list',component:AdminUserList},
 
+        {path:'/stock_info/create',component:StockInfoEdit},
+        {path:'/stock_info/edit/:id',component:StockInfoEdit,props:true},
+        {path:'/stock_info/list',component:StockInfoList},
+
+        {path:'/charts/create',component:ChartInfoEdit},
+        {path:'/charts/edit/:id',component:ChartInfoEdit,props:true},
+        {path:'/charts/list',component:ChartInfoList},
+
+        
       ]
     },
 
