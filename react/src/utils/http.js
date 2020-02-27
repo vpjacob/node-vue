@@ -2,7 +2,7 @@ import axios from "axios";
 import * as _ from 'lodash';
 
 // const base = "http://localhost:3000/chart/api";
-const base = "http://39.106.18.19/chart/api";
+const base = "http://test.vpjacob.club/chart/api";
 const storage = window.localStorage
 
 const buildPublicParams = (reqParams = {}) => {
